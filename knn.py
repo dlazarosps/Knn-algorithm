@@ -91,15 +91,20 @@ def argparser():
         default = 'euclidean', 
         required = False, help = 'distance method')
 
+    parser.add_argument('-n', 
+        '--normal', action = 'store', dest = 'normal',
+        default = '', 
+        required = False, help = 'dataset normalized')
+
     parser.add_argument('-tr', 
         '--train', action = 'store', dest = 'train_path',
-        default = './Dataset_CancerClassification/Dados_Normalizados/cancer_train.csv', 
+        default = '', 
         required = False, help = 'train file path')
 
     parser.add_argument('-ts', 
         '--test', action = 'store', dest = 'test_path',
-        default = './Dataset_CancerClassification/Dados_Normalizados/cancer_test.csv', 
-        required = False, help = 'train file path')
+        default = '', 
+        required = False, help = 'test file path')
 
     parser.add_argument('-p', 
         '--print', action = 'store', dest = 'print_qnt',
@@ -119,13 +124,24 @@ def argparser():
 def main():
     args = argparser()
 
+    if args.train_path:
+        train_path = args.train_path
+    else:
+        train_path = './Dataset_CancerClassification/Dados_{}Normalizados/cancer_train.csv'.format(args.normal)
+
+    if args.test_path:
+        test_path = args.test_path
+    else:
+        test_path = './Dataset_CancerClassification/Dados_{}Normalizados/cancer_test.csv'.format(args.normal)
+
+
     # xi = {'x': 0.50, 'y': 0.43}
     # xj = {'x': 1.00, 'y': 0.57}
 
     # print(distance(xi, xj, args.mode))
 
-    arr_train = read_data(args.train_path)
-    arr_test = read_data(args.test_path)
+    arr_train = read_data(train_path)
+    arr_test = read_data(test_path)
 
     # print(distance(arr_train[0], arr_train[1], args.mode))
 
