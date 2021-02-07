@@ -68,10 +68,10 @@ def argparser():
         default = 1, required = True, type=int,
         help = 'Number of neighbors')
     
-    parser.add_argument('-p', 
-        '--print', action = 'store', dest = 'print_qnt',
-        default = None, required = False, type=int,
-        help = 'Number of neighbors')
+    parser.add_argument('-m', 
+        '--mode', action = 'store', dest = 'mode',
+        default = 'euclidean', 
+        required = False, help = 'distance method')
 
     parser.add_argument('-tr', 
         '--train', action = 'store', dest = 'train_path',
@@ -82,11 +82,11 @@ def argparser():
         '--test', action = 'store', dest = 'test_path',
         default = './Dataset_CancerClassification/Dados_Normalizados/cancer_test.csv', 
         required = False, help = 'train file path')
-    
-    parser.add_argument('-m', 
-        '--mode', action = 'store', dest = 'mode',
-        default = 'euclidean', 
-        required = False, help = 'distance method')
+
+    parser.add_argument('-p', 
+        '--print', action = 'store', dest = 'print_qnt',
+        default = None, required = False, type=int,
+        help = 'Print test count')
 
     return parser.parse_args()
 
