@@ -52,6 +52,24 @@ def knn(kparam, mode, train, test):
 
         test[ts]['predicted'] = most_frequent(neighbors)
 
+
+def calc_err(test):
+    n = len(test)
+    err = 1/n
+    soma = 0
+
+    for i in range(0, n):
+        if test[i]['target'] != test[i]['predicted']:
+            soma += 1
+    
+    return err * soma
+
+
+def calc_acc(test):
+    err = calc_err(test)
+    return 1 - err
+        
+
 def print_results(test, qnt = None):
     if qnt is None:
         qnt = len(test)
@@ -87,8 +105,15 @@ def argparser():
         '--print', action = 'store', dest = 'print_qnt',
         default = None, required = False, type=int,
         help = 'Print test count')
+    
+    parser.add_argument('-x', 
+        '--exec', action = 'store', dest = 'exec',
+        default = 0, required = False, type=int,
+        help = 'Execution count')
 
     return parser.parse_args()
+
+
 
 
 def main():
@@ -104,10 +129,25 @@ def main():
 
     # print(distance(arr_train[0], arr_train[1], args.mode))
 
-    knn(args.kparam, args.mode, arr_train, arr_test)
-            
-    print_results(arr_test, args.print_qnt)
+    if args.exec:
+        run = args.kparam / 2.0
+    else:
+        run = 1
     
+    k = args.kparam
+    print("K \t Acc")
+
+    while run > 0:
+        knn(k, args.mode, arr_train, arr_test)
+        acc = calc_acc(arr_test)
+        print("{} \t {}".format(k, acc))
+        k -= 2
+        run -= 1
+
+    if args.exec == 0:
+        print("Results N test instances")
+        print_results(arr_test, args.print_qnt)
+
 
 if __name__ == '__main__':
     main()

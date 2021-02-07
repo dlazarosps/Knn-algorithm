@@ -7,5 +7,5 @@ INF01017 - Implementation k-nearest neighbors algorithm
 ## Usage
 
 ``` bash
-python knn.py -kparam [-mode] [-train] [-test] [-print]
+python knn.py -kparam [-exec] [-mode] [-train] [-test] [-print]
 ```
